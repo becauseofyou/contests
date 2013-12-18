@@ -1,16 +1,2 @@
-.DS_Store
-*.dsYM
 *.swp
-
-*.aux
-*.log
-*.pdf
-
-*.class
-*.in
-*.out
-
-*.zip
-
-/summary/
-/my-contests/
+*~
