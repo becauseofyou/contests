@@ -38,17 +38,24 @@ void DealWithCircle(int u, int size_u, vector <int> &seq) {
         }
     }
 
+    int sz = 0;
     for (int i = 0; i < (int)seq.size(); i++) {
         int _now = seq[i];
         for (int color_u = 0; color_u < 3; color_u++) {
             for (int color_v = 0; color_v < 3; color_v++) {
-                for (int color_now = 0; color_now < 3; color_now++) {
-                    for (int pre = 0; pre <= size_u; pre++) {
-                        for (int now = 0; now <= size[_now]; now++) {
+                for (int color_now = 0; color_now < 3; color_now++) if (valid[color_v][color_now]) {
+                    for (int pre = 0; pre <= size_u; pre++) if (~g[color_u][color_v][pre]) {
+                        for (int now = 0; now <= size[_now]; now++) if (~f[color_now][_now][now]){
+                            Max(g[color_u][color_now][pre + now], g[color_u][color_v][pre] + f[color_now][_now][now]);
                         }
                     }
                 }
             }
+        }
+    }
+    for (int color_u = 0; color_u < 3; color_u++) {
+        for (int color_v = 0; color_v < 3; color_v++) {
+            for ()
         }
     }
 }
@@ -69,15 +76,13 @@ void Dfs (int u, int fa) {
                 Merge(u, sz, v, size[v]);
             } else {
                 vector <int> circle;
-                {
-                    int end = from[u];
-                    while (end != u) {
-                        circle.push_back(end);
-                        end = pre[end];
-                    }
-                    reverse(circle.begin(), circle.end());
-                    DealWithCircle(u, sz, circle);
+                int end = from[u];
+                while (end != u) {
+                    circle.push_back(end);
+                    end = pre[end];
                 }
+                reverse(circle.begin(), circle.end());
+                DealWithCircle(u, sz, circle);
                 from[u] = -1;
             }
             sz += size[v];
