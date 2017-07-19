@@ -1,31 +1,29 @@
 {
 	
-	"cmd": ["g++.exe", "${file}", "-o", "${file_path}/${file_base_name}", "-std=c++11", "-m32"],
+	"cmd": ["g++.exe", "${file}", "-o", "${file_base_name}", "-std=c++11", "-m32", "-Wall"],
 	"file_regex": "^(..[^:]*):([0-9]+):?([0-9]+)?:? (.*)$",
 	"working_dir": "${file_path}",
 	"selector": "source.c, source.c++",
 	"encoding":"UTF-8",	
 	"variants":
 	[
-		
 		{
-			 "name": "Compile And Run",
+			"name": "Compile && Run",
 			"shell": true,
-            "cmd" : ["g++.exe", "${file}", "-o", "${file_path}/${file_base_name}", "-std=c++11", "-m32", "&&" , "start", "cmd", "/k", "${file_path}/${file_base_name} &&echo. & pause && exit"]
+            "cmd" : ["g++.exe", "${file}", "-o", "${file_path}/${file_base_name}", "-std=c++11", "-m32", "-Wall", "&&" , "start", "cmd", "/k", "${file_path}/${file_base_name} &&echo. & pause && exit"]
 		},
 		{
-			"name": "Run",
-			"cmd": [ "start", "cmd", "/k", "${file_path}/${file_base_name} &&echo. & pause && exit"],
-			"shell": true
+			"name": "Fileinput",
+			"shell": true,
+			"cmd": [ "start", "cmd", "/k", "${file_base_name} < ${file_base_name}.in && echo. & pause && exit"  ]
 		},
 		{
-			 "name": "RunScript",
+			"name": "RunScript",
 			"shell": true,
-            "cmd" : ["g++.exe", "${file}", "-o", "${file_path}/${file_base_name}", "-std=c++11", "-m32", "&&" , "start", "cmd", "/k", "${file_path}/${file_base_name} &&echo. & pause && exit"]
+            "cmd" : ["${file_path}/check.bat &&echo. & pause && exit"]
 		}
 	]
 }
-
 
 {
 "shell_cmd": "g++ -std=c++11 \"${file}\" -o \"${file_path}/${file_base_name}\"",
